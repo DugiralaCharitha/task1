@@ -1,0 +1,64 @@
+class ToDoList:
+    def _init_(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append({"task": task, "completed": False})
+        print(f'Task "{task}" added!')
+
+    def remove_task(self, task_number):
+        if 0 <= task_number < len(self.tasks):
+            removed_task = self.tasks.pop(task_number)
+            print(f'Task "{removed_task["task"]}" removed!')
+        else:
+            print("Invalid task number!")
+
+    def complete_task(self, task_number):
+        if 0 <= task_number < len(self.tasks):
+            self.tasks[task_number]["completed"] = True
+            print(f'Task "{self.tasks[task_number]["task"]}" marked as completed!')
+        else:
+            print("Invalid task number!")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("Your to-do list is empty!")
+        else:
+            for i, task in enumerate(self.tasks):
+                status = "✓" if task["completed"] else "✗"
+                print(f'{i + 1}. {task["task"]} [{status}]')
+
+def show_menu():
+    print("\nTo-Do List Menu:")
+    print("1. View Tasks")
+    print("2. Add Task")
+    print("3. Remove Task")
+    print("4. Mark Task as Complete")
+    print("5. Exit")
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        show_menu()
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            todo_list.view_tasks()
+        elif choice == '2':
+            task = input("Enter a new task: ")
+            todo_list.add_task(task)
+        elif choice == '3':
+            task_number = int(input("Enter the task number to remove: ")) - 1
+            todo_list.remove_task(task_number)
+        elif choice == '4':
+            task_number = int(input("Enter the task number to mark as complete: ")) - 1
+            todo_list.complete_task(task_number)
+        elif choice == '5':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice! Please select a valid option.")
+
+if _name_ == "_main_":
+    main()
